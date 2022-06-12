@@ -33,7 +33,7 @@ func initClient() *client {
 	}
 
 	conn, err := grpc.Dial(
-		"0.0.0.0:50880",
+		models.Address,
 		grpc.WithTransportCredentials(tlsCredentials),
 	)
 	if err != nil {

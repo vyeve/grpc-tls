@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	lis, err := net.Listen("tcp", "0.0.0.0:50880")
+	lis, err := net.Listen("tcp", models.Address)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
@@ -26,6 +26,6 @@ func main() {
 	)
 	models.RegisterSSHServer(grpcServer, NewServer())
 
-	log.Printf("start to listen on %s", "50880")
+	log.Printf("start to listen on %s", models.Address[1:])
 	log.Fatal(grpcServer.Serve(lis))
 }

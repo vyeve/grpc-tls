@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-DAYS=$1
+DAYS=60
+
+if [ $# -ne 0 ]; then
+    DAYS=$1
+fi
+
 SCRIPT_DIR=$(dirname $0)
 # Source: https://www.youtube.com/watch?v=7YgaZIFn7mY
 
@@ -39,15 +44,14 @@ openssl x509 \
     -CA $SCRIPT_DIR/ca-cert.pem \
     -CAkey $SCRIPT_DIR/ca-key.pem \
     -CAcreateserial \
-    -extfile $SCRIPT_DIR/server-ext.cnf \
-    -out $SCRIPT_DIR/server-cert.pem
+    -out $SCRIPT_DIR/server-cert.pem \
+    -extfile $SCRIPT_DIR/server-ext.cnf
 
 echo "Server's self signed certificate"
 openssl x509 \
     -in $SCRIPT_DIR/server-cert.pem \
     -noout \
     -text
-
 
 # 4. Generate client's private key and certificate signing request (CSR)
 openssl req \
@@ -64,8 +68,9 @@ openssl x509 \
     -days $DAYS -CA $SCRIPT_DIR/ca-cert.pem \
     -CAkey $SCRIPT_DIR/ca-key.pem \
     -CAcreateserial \
-    -out $SCRIPT_DIR/client-cert.pem \
-    -extfile $SCRIPT_DIR/client-ext.cnf
+    -extfile $SCRIPT_DIR/client-ext.cnf \
+    -out $SCRIPT_DIR/client-cert.pem 
+
 
 echo "Client's signed certificate"
 openssl x509 \
