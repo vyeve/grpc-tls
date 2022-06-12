@@ -17,7 +17,15 @@ openssl x509 -in $SCRIPT_DIR/ca-cert.pem -noout -text
 openssl req -newkey ed25519 -noenc -keyout $SCRIPT_DIR/server-key.pem -out $SCRIPT_DIR/server-req.pem -subj="/C=UA/ST=Kyiv/L=Kyiv/O=NewxelLTD/OU=IK-Tech/CN=*/emailAddress=vyeve@ik-tech.io"
 
 # 3. Use CA's private key to sign web server's CSR and get back the signed certificate
-openssl x509 -req -in $SCRIPT_DIR/server-req.pem -days $DAYS -CA $SCRIPT_DIR/ca-cert.pem -CAkey $SCRIPT_DIR/ca-key.pem -CAcreateserial -out $SCRIPT_DIR/server-cert.pem  -extfile $SCRIPT_DIR/server-ext.cnf
+openssl x509 \
+    -req \
+    -in $SCRIPT_DIR/server-req.pem \
+    -days $DAYS \
+    -CA $SCRIPT_DIR/ca-cert.pem \
+    -CAkey $SCRIPT_DIR/ca-key.pem \
+    -CAcreateserial \
+    -extfile $SCRIPT_DIR/server-ext.cnf \
+    -out $SCRIPT_DIR/server-cert.pem
 
 echo "Server's self signed certificate"
 openssl x509 -in $SCRIPT_DIR/server-cert.pem -noout -text
