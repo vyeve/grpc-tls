@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	//go:embed ca-cert.pem
+	//go:embed server-cert.pem
 	serverCertPEM []byte
-	//go:embed ca-key.pem
+	//go:embed server-key.pem
 	serverKeyPEM []byte
 	//go:embed ca-cert.pem
 	caCert []byte
@@ -23,15 +23,20 @@ var (
 )
 
 func LoadServerTLSCredentials() (credentials.TransportCredentials, error) {
+	certPool := x509.NewCertPool()
+
+	if !certPool.AppendCertsFromPEM(caCert) {
+		return nil, errors.New("failed to add client CA's certificate")
+	}
 	serverCert, err := tls.X509KeyPair(serverCertPEM, serverKeyPEM)
 	if err != nil {
 		return nil, err
 	}
-
 	// Create the credentials and return it
 	config := &tls.Config{
 		Certificates: []tls.Certificate{serverCert},
-		ClientAuth:   tls.NoClientCert,
+		ClientAuth:   tls.RequireAndVerifyClientCert,
+		ClientCAs:    certPool,
 	}
 
 	return credentials.NewTLS(config), nil

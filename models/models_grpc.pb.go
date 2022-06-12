@@ -18,86 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// ServiceClient is the client API for Service service.
+// SSHClient is the client API for SSH service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ServiceClient interface {
+type SSHClient interface {
 	Echo(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 }
 
-type serviceClient struct {
+type sSHClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
-	return &serviceClient{cc}
+func NewSSHClient(cc grpc.ClientConnInterface) SSHClient {
+	return &sSHClient{cc}
 }
 
-func (c *serviceClient) Echo(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *sSHClient) Echo(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, "/models.Service/Echo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/models.SSH/Echo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ServiceServer is the server API for Service service.
-// All implementations must embed UnimplementedServiceServer
+// SSHServer is the server API for SSH service.
+// All implementations must embed UnimplementedSSHServer
 // for forward compatibility
-type ServiceServer interface {
+type SSHServer interface {
 	Echo(context.Context, *Request) (*Response, error)
-	mustEmbedUnimplementedServiceServer()
+	mustEmbedUnimplementedSSHServer()
 }
 
-// UnimplementedServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedServiceServer struct {
+// UnimplementedSSHServer must be embedded to have forward compatible implementations.
+type UnimplementedSSHServer struct {
 }
 
-func (UnimplementedServiceServer) Echo(context.Context, *Request) (*Response, error) {
+func (UnimplementedSSHServer) Echo(context.Context, *Request) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
 }
-func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
+func (UnimplementedSSHServer) mustEmbedUnimplementedSSHServer() {}
 
-// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ServiceServer will
+// UnsafeSSHServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SSHServer will
 // result in compilation errors.
-type UnsafeServiceServer interface {
-	mustEmbedUnimplementedServiceServer()
+type UnsafeSSHServer interface {
+	mustEmbedUnimplementedSSHServer()
 }
 
-func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
-	s.RegisterService(&Service_ServiceDesc, srv)
+func RegisterSSHServer(s grpc.ServiceRegistrar, srv SSHServer) {
+	s.RegisterService(&SSH_ServiceDesc, srv)
 }
 
-func _Service_Echo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SSH_Echo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).Echo(ctx, in)
+		return srv.(SSHServer).Echo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/models.Service/Echo",
+		FullMethod: "/models.SSH/Echo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).Echo(ctx, req.(*Request))
+		return srv.(SSHServer).Echo(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Service_ServiceDesc is the grpc.ServiceDesc for Service service.
+// SSH_ServiceDesc is the grpc.ServiceDesc for SSH service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Service_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "models.Service",
-	HandlerType: (*ServiceServer)(nil),
+var SSH_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "models.SSH",
+	HandlerType: (*SSHServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Echo",
-			Handler:    _Service_Echo_Handler,
+			Handler:    _SSH_Echo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
