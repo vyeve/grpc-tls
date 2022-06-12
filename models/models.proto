@@ -22,6 +22,6 @@ message Response {
 }
 
 // Service is a simple echo like service
-service Service {
+service SSH {
     rpc Echo (Request) returns (Response);
 }
