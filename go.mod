@@ -1,4 +1,4 @@
-module github.com/vyeve/grpc-ssh-server
+module github.com/vyeve/grpc-tls
 
 go 1.18
 

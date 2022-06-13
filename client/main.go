@@ -7,8 +7,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/vyeve/grpc-ssh-server/cert"
-	"github.com/vyeve/grpc-ssh-server/models"
+	"github.com/vyeve/grpc-tls/cert"
+	"github.com/vyeve/grpc-tls/models"
 
 	"google.golang.org/grpc"
 )

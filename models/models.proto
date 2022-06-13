@@ -7,7 +7,7 @@ protoc --go_out=. --go_opt=paths=source_relative \
 models.proto
 */
 
-option go_package = "github.com/vyeve/grpc-ssh-server/models";
+option go_package = "github.com/vyeve/grpc-tls/models";
 
 // Request is a simple message struct 
 message Request {

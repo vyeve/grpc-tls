@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/vyeve/grpc-ssh-server/models"
+	"github.com/vyeve/grpc-tls/models"
 )
 
 type server struct {

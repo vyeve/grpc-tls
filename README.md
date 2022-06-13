@@ -1,4 +1,4 @@
-# grpc-ssh-server
+# grpc-tls
 example of gRPC service with SSH like access
 
 ## Sources
