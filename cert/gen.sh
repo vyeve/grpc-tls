@@ -44,8 +44,8 @@ openssl x509 \
     -CA $SCRIPT_DIR/ca-cert.pem \
     -CAkey $SCRIPT_DIR/ca-key.pem \
     -CAcreateserial \
-    -out $SCRIPT_DIR/server-cert.pem \
-    -extfile $SCRIPT_DIR/server-ext.cnf
+    -extfile $SCRIPT_DIR/extension.conf \
+    -out $SCRIPT_DIR/server-cert.pem
 
 echo "Server's self signed certificate"
 openssl x509 \
@@ -68,7 +68,7 @@ openssl x509 \
     -days $DAYS -CA $SCRIPT_DIR/ca-cert.pem \
     -CAkey $SCRIPT_DIR/ca-key.pem \
     -CAcreateserial \
-    -extfile $SCRIPT_DIR/client-ext.cnf \
+    -extfile $SCRIPT_DIR/extension.conf \
     -out $SCRIPT_DIR/client-cert.pem 
 
 
